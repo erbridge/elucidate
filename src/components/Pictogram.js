@@ -18,9 +18,8 @@ class Pictogram extends Component {
 
     this.pictogram.clear();
     this.pictogram.size(500, 500);
-    this.pictogram.rect(500, 500).fill('white');
 
-    pictograms[char].forEach(draw => draw(this.pictogram));
+    pictograms[char].forEach(draw => draw(this.pictogram, 'white'));
   }
 
   componentDidMount() {
