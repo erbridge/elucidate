@@ -107,21 +107,21 @@ const parameters = {
     tertiary: [
       new Segment((element, colour) =>
         element
-          .rect(140, 2)
+          .rect(140, 4)
           .fill(colour)
           .x(310)
           .cy(425),
       ),
       new Segment((element, colour) =>
         element
-          .rect(140, 2)
+          .rect(140, 4)
           .fill(colour)
           .x(310)
           .cy(400),
       ),
       new Segment((element, colour) =>
         element
-          .rect(140, 2)
+          .rect(140, 4)
           .fill(colour)
           .x(310)
           .cy(375),
@@ -129,12 +129,12 @@ const parameters = {
       new Segment((element, colour) =>
         element
           .polygon([
-            [-1, -1],
-            [140, -1],
+            [-2, -2],
+            [140, -2],
             [140, 150],
-            [138, 150],
-            [138, 1],
-            [-1, 1],
+            [136, 150],
+            [136, 2],
+            [-2, 2],
           ])
           .fill(colour)
           .x(310)
@@ -142,7 +142,7 @@ const parameters = {
       ),
       new Segment((element, colour) =>
         element
-          .rect(205, 2)
+          .rect(205, 4)
           .fill(colour)
           .cx(250)
           .cy(50)
@@ -150,7 +150,7 @@ const parameters = {
       ),
       new Segment((element, colour) =>
         element
-          .rect(205, 2)
+          .rect(205, 4)
           .fill(colour)
           .cx(250)
           .cy(25)
@@ -158,7 +158,7 @@ const parameters = {
       ),
       new Segment((element, colour) =>
         element
-          .rect(205, 2)
+          .rect(205, 4)
           .fill(colour)
           .cx(250)
           .cy(100)
@@ -166,7 +166,7 @@ const parameters = {
       ),
       new Segment((element, colour) =>
         element
-          .rect(205, 2)
+          .rect(205, 4)
           .fill(colour)
           .cx(250)
           .cy(125)
@@ -174,7 +174,7 @@ const parameters = {
       ),
       new Segment((element, colour) =>
         element
-          .rect(205, 2)
+          .rect(205, 4)
           .fill(colour)
           .cx(250)
           .cy(175)
@@ -182,28 +182,28 @@ const parameters = {
       ),
       new Segment((element, colour) =>
         element
-          .rect(2, 205)
+          .rect(4, 205)
           .fill(colour)
           .cx(151)
           .y(0),
       ),
       new Segment((element, colour) =>
         element
-          .rect(2, 205)
+          .rect(4, 205)
           .fill(colour)
           .cx(136)
           .y(0),
       ),
       new Segment((element, colour) =>
         element
-          .rect(2, 205)
+          .rect(4, 205)
           .fill(colour)
           .cx(500 - 151)
           .y(0),
       ),
       new Segment((element, colour) =>
         element
-          .rect(2, 205)
+          .rect(4, 205)
           .fill(colour)
           .cx(500 - 136)
           .y(0),
@@ -212,7 +212,7 @@ const parameters = {
     quaternary: [
       new Segment((element, colour) =>
         element
-          .polygon([[-1, -1], [70, -1], [70, 220], [68, 220], [68, 1], [-1, 1]])
+          .polygon([[-2, -2], [70, -2], [70, 220], [66, 220], [66, 2], [-2, 2]])
           .fill(colour)
           .x(345)
           .y(280)
@@ -221,14 +221,14 @@ const parameters = {
       new Segment((element, colour) =>
         element
           .polygon([
-            [-1, -1],
-            [205, -1],
+            [-2, -2],
+            [205, -2],
             [205, 245],
-            [-1, 245],
-            [-1, 243],
-            [203, 243],
-            [203, 1],
-            [-1, 1],
+            [-2, 245],
+            [-2, 241],
+            [201, 241],
+            [201, 2],
+            [-2, 2],
           ])
           .fill(colour)
           .x(230)
@@ -239,7 +239,7 @@ const parameters = {
         element
           .rect(30, 30)
           .fill('none')
-          .stroke({ width: 2, color: colour })
+          .stroke({ width: 4, color: colour })
           .x(30)
           .y(425)
           .rotate(45)
@@ -249,7 +249,7 @@ const parameters = {
         element
           .circle(70)
           .fill('none')
-          .stroke({ width: 1, color: colour })
+          .stroke({ width: 2, color: colour })
           .cx(250)
           .cy(250)
           .opacity(0.3),
@@ -258,7 +258,7 @@ const parameters = {
         element
           .circle(330)
           .fill('none')
-          .stroke({ width: 2, color: colour })
+          .stroke({ width: 4, color: colour })
           .cx(250)
           .cy(250)
           .opacity(0.5),
@@ -269,7 +269,7 @@ const parameters = {
         return element
           .circle(435)
           .fill('none')
-          .stroke({ width: 2, color: colour })
+          .stroke({ width: 4, color: colour })
           .maskWith(mask)
           .cx(250)
           .cy(250)
@@ -278,7 +278,7 @@ const parameters = {
       }),
       new Segment((element, colour) =>
         element
-          .rect(125, 1)
+          .rect(125, 2)
           .fill(colour)
           .x(-40)
           .cy(250)
@@ -287,7 +287,7 @@ const parameters = {
       ),
       new Segment((element, colour) =>
         element
-          .rect(280, 1)
+          .rect(280, 2)
           .fill(colour)
           .x(-40)
           .cy(290)
