@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import Sound from 'react-sound';
 import shuffle from 'shuffle-array';
 
 import Input from './components/Input';
@@ -6,6 +7,8 @@ import Message from './components/Message';
 
 import { generatePictograms } from './data/pictogram';
 import { MessageData, getNextMessage } from './data/messages';
+
+import ambienceSound from './assets/audio/ambience.mp3';
 
 import './App.css';
 
@@ -18,6 +21,7 @@ class App extends Component {
     score: 0,
     seenChars: {},
     shouldAllowInput: true,
+    shouldPlayAudio: true,
     shouldRevealAllChars: false,
   };
 
@@ -69,11 +73,24 @@ class App extends Component {
       messageWords,
       seenChars,
       shouldAllowInput,
+      shouldPlayAudio,
       shouldRevealAllChars,
     } = this.state;
 
     return (
       <div className="App">
+        <button
+          onClick={() => this.setState({ shouldPlayAudio: !shouldPlayAudio })}
+          style={{ position: 'fixed' }}
+        >
+          {shouldPlayAudio ? 'mute' : 'unmute'}
+        </button>
+        <Sound
+          url={ambienceSound}
+          playStatus={Sound.status.PLAYING}
+          volume={shouldPlayAudio ? 100 : 0}
+          loop
+        />
         <Message
           phrases={messageWords}
           pictograms={PICTOGRAMS}
