@@ -8,6 +8,7 @@
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.0",
     "seedrandom": "^2.4.3",
+    "shallow-equals": "^1.0.0",
     "svg.js": "^2.6.3"
   },
   "scripts": {
