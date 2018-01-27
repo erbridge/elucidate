@@ -301,7 +301,6 @@ for (let i = 10; i < 36; i++) {
 }
 
 const selectDrawFns = (char, rng, usedDrawFns, attemptCount = 0) => {
-  const charCode = char.charCodeAt(0);
   const countType =
     ['a', 'e', 'i', 'o', 'u'].indexOf(char) !== -1 ? 'vowel' : 'consonant';
 
@@ -311,13 +310,12 @@ const selectDrawFns = (char, rng, usedDrawFns, attemptCount = 0) => {
     const segments = [...parameters.segments[key]];
     const count =
       parameters.counts[countType][key][
-        (charCode * rng() + attemptCount) %
-          parameters.counts[countType][key].length
+        (rng() + attemptCount) % parameters.counts[countType][key].length
       ];
 
     for (let i = 0; i < count; i++) {
       const [segment] = segments.splice(
-        (charCode * rng() + attemptCount) % segments.length,
+        (rng() + attemptCount) % segments.length,
         1,
       );
 
