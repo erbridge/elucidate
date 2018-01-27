@@ -24,10 +24,10 @@ class Keyboard extends Component {
             className="Keyboard__key"
             onClick={() => handleInput(char)}
           >
+            <Pictogram drawFns={pictograms[char]} />
             {knownChars.indexOf(char) !== -1 && (
               <div className="Keyboard__translation">{char}</div>
             )}
-            <Pictogram drawFns={pictograms[char]} />
           </div>
         ))}
       </div>

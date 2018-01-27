@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import shuffle from 'shuffle-array';
 
 import Input from './components/Input';
 import Message from './components/Message';
@@ -24,13 +25,17 @@ class App extends Component {
 
       return {
         messageWords,
-        seenChars: messageWords
-          .map(word =>
-            word
-              .split('')
-              .reduce((acc, char) => ({ ...acc, [char]: true }), {}),
-          )
-          .reduce((acc, chars) => ({ ...acc, ...chars }), { ...seenChars }),
+        seenChars: shuffle(
+          Object.keys(
+            messageWords
+              .map(word =>
+                word
+                  .split('')
+                  .reduce((acc, char) => ({ ...acc, [char]: true }), {}),
+              )
+              .reduce((acc, chars) => ({ ...acc, ...chars }), {}),
+          ),
+        ).reduce((acc, char) => ({ ...acc, [char]: true }), { ...seenChars }),
       };
     });
   }

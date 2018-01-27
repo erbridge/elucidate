@@ -15,6 +15,6 @@
 .Keyboard__translation {
   position: absolute;
   font-size: 3rem;
-  color: white;
-  opacity: 0.3;
+  color: #f88;
+  opacity: 0.5;
 }
