@@ -12,6 +12,12 @@ class Pictogram extends Component {
     seed: PropTypes.number.isRequired,
   };
 
+  makeSvg(node) {
+    if (!this.pictogram) {
+      this.pictogram = svg(node);
+    }
+  }
+
   generatePictogram({ char, seed }) {
     // FIXME: Pass this in instead of generating it every time.
     const pictograms = generatePictograms(seed);
@@ -39,7 +45,7 @@ class Pictogram extends Component {
     return (
       <div
         ref={node => {
-          this.pictogram = svg(node);
+          this.makeSvg(node);
         }}
         className="Pictogram"
       />

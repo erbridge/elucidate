@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 
 import Phrase from './Phrase';
 
+import './Message.css';
+
 class Message extends Component {
   static propTypes = {
     phrases: PropTypes.arrayOf(PropTypes.string).isRequired,
