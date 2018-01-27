@@ -9,11 +9,12 @@ class Keyboard extends Component {
   static propTypes = {
     chars: PropTypes.arrayOf(PropTypes.string).isRequired,
     handleInput: PropTypes.func.isRequired,
+    knownChars: PropTypes.arrayOf(PropTypes.string).isRequired,
     pictograms: PropTypes.object.isRequired,
   };
 
   render() {
-    const { chars, handleInput, pictograms } = this.props;
+    const { chars, handleInput, pictograms, knownChars } = this.props;
 
     return (
       <div className="Keyboard">
@@ -23,7 +24,10 @@ class Keyboard extends Component {
             className="Keyboard__key"
             onClick={() => handleInput(char)}
           >
-            <Pictogram drawFns={pictograms[char]} />{' '}
+            {knownChars.indexOf(char) !== -1 && (
+              <div className="Keyboard__translation">{char}</div>
+            )}
+            <Pictogram drawFns={pictograms[char]} />
           </div>
         ))}
       </div>

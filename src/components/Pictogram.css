@@ -1,5 +1,5 @@
 .Pictogram {
-  width: 7rem;
-  height: 7rem;
+  max-width: 7rem;
+  max-height: 7rem;
   margin: 0.5rem;
 }

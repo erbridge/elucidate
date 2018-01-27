@@ -15,6 +15,7 @@ class Input extends Component {
   };
 
   state = {
+    knownChars: [],
     wordInput: [],
     wordTranslation: '',
   };
@@ -25,6 +26,12 @@ class Input extends Component {
     const wordString = word.join('');
 
     if (isWordValid(wordString)) {
+      newState.knownChars = wordString
+        .split('')
+        .reduce((acc, char) => ({ ...acc, [char]: true }), {
+          ...this.state.knownChars,
+        });
+
       newState.wordTranslation = wordString;
     }
 
@@ -33,7 +40,7 @@ class Input extends Component {
 
   render() {
     const { chars, pictograms } = this.props;
-    const { wordInput, wordTranslation } = this.state;
+    const { knownChars, wordInput, wordTranslation } = this.state;
 
     return (
       <div className="Input">
@@ -50,6 +57,7 @@ class Input extends Component {
           handleInput={char =>
             this.setState({ wordInput: [...wordInput, char] })
           }
+          knownChars={Object.keys(knownChars)}
           pictograms={pictograms}
         />
       </div>
