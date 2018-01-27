@@ -12,17 +12,33 @@ class App extends Component {
   state = {
     messageWords: '',
     score: 0,
+    seenChars: {},
   };
 
-  componentWillMount() {
-    const { score } = this.state;
+  updateMessage({ score }) {
+    this.setState(({ seenChars }) => {
+      const messageWords = getNextMessage(score).getWords();
 
-    this.setState({ messageWords: getNextMessage(score).getWords() });
+      return {
+        messageWords,
+        seenChars: messageWords
+          .map(word =>
+            word
+              .split('')
+              .reduce((acc, char) => ({ ...acc, [char]: true }), {}),
+          )
+          .reduce((acc, chars) => ({ ...acc, ...chars }), { ...seenChars }),
+      };
+    });
   }
 
-  componentWillUpdate(nextProps, { score }) {
-    if (score !== this.state.score) {
-      this.setState({ messageWords: getNextMessage(score).getWords() });
+  componentWillMount() {
+    this.updateMessage(this.state);
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextState.score !== this.state.score) {
+      this.updateMessage(nextState);
     }
   }
 
