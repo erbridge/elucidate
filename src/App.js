@@ -9,8 +9,8 @@ class App extends Component {
     return (
       <div className="App">
         <Message
-          phrases={[/*'1234',*/ 'aeiou', 'bcdfghjklmnpqrstvwxyz']}
-          seed={0}
+          phrases={[/*'1234',*/ 'abcdefghijklmnopqrstuvwxyz']}
+          seed={Math.floor(Math.random() * 1000)}
         />
       </div>
     );

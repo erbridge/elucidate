@@ -1,7 +1,7 @@
 import seedrandom from 'seedrandom';
 import equals from 'shallow-equals';
 
-const MAX_ATTEMPTS = 100;
+const MAX_ATTEMPTS = 10000;
 
 class Segment {
   constructor(drawFn) {
@@ -17,9 +17,9 @@ const parameters = {
   counts: {
     vowel: {
       primary: [0, 1, 1, 2],
-      secondary: [0, 1, 1, 1, 1, 2, 2, 3, 4],
-      tertiary: [0, 0, 1, 2],
-      quaternary: [0, 1, 1, 2],
+      secondary: [0, 1, 1, 1, 1, 2, 2, 2, 3],
+      tertiary: [0],
+      quaternary: [0, 0, 0, 1, 1],
     },
     consonant: {
       primary: [0, 1, 1, 2],
@@ -315,12 +315,13 @@ const selectDrawFns = (char, rng, usedDrawFns, attemptCount = 0) => {
     const segments = [...parameters.segments[key]];
     const count =
       parameters.counts[countType][key][
-        (charCode * rng()) % parameters.counts[countType][key].length
+        (charCode * rng() + attemptCount) %
+          parameters.counts[countType][key].length
       ];
 
     for (let i = 0; i < count; i++) {
       const [segment] = segments.splice(
-        (charCode * rng()) % segments.length,
+        (charCode * rng() + attemptCount) % segments.length,
         1,
       );
 
@@ -328,14 +329,10 @@ const selectDrawFns = (char, rng, usedDrawFns, attemptCount = 0) => {
     }
   });
 
-  if (usedDrawFns.find(fns => equals(fns, drawFns))) {
+  if (!drawFns.length || usedDrawFns.find(fns => equals(fns, drawFns))) {
     if (attemptCount > MAX_ATTEMPTS) {
       throw new Error(`Unable to generate a pictogram for '${char}'`);
     }
-
-    console.error(
-      `Tried to generate a duplicate pictogram for '${char}'. Regenerating.`,
-    );
 
     return selectDrawFns(char, rng, usedDrawFns, attemptCount + 1);
   }
