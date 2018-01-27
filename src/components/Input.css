@@ -3,6 +3,12 @@
   flex-direction: column;
 }
 
+.Input__translation {
+  text-align: center;
+  font-size: 3rem;
+  color: white;
+}
+
 .Input__word {
   display: flex;
   justify-content: center;
