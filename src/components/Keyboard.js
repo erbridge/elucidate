@@ -8,15 +8,24 @@ import './Keyboard.css';
 class Keyboard extends Component {
   static propTypes = {
     chars: PropTypes.arrayOf(PropTypes.string).isRequired,
+    handleInput: PropTypes.func.isRequired,
     pictograms: PropTypes.object.isRequired,
   };
 
   render() {
-    const { chars, pictograms } = this.props;
+    const { chars, handleInput, pictograms } = this.props;
 
     return (
       <div className="Keyboard">
-        {chars.map(char => <Pictogram key={char} drawFns={pictograms[char]} />)}
+        {chars.map(char => (
+          <div
+            key={char}
+            className="Keyboard__key"
+            onClick={() => handleInput(char)}
+          >
+            <Pictogram drawFns={pictograms[char]} />{' '}
+          </div>
+        ))}
       </div>
     );
   }

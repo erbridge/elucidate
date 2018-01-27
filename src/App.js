@@ -71,6 +71,7 @@ class App extends Component {
           </button>
         </div>
         <Message phrases={messageWords} pictograms={PICTOGRAMS} />
+        <div className="App__spacer" />
         <Input chars={Object.keys(seenChars)} pictograms={PICTOGRAMS} />
       </div>
     );
