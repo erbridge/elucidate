@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import Input from './components/Input';
 import Message from './components/Message';
 
 import { generatePictograms } from './data/pictogram';
@@ -45,7 +46,7 @@ class App extends Component {
   }
 
   render() {
-    const { messageWords } = this.state;
+    const { messageWords, seenChars } = this.state;
 
     return (
       <div className="App">
@@ -70,6 +71,7 @@ class App extends Component {
           </button>
         </div>
         <Message phrases={messageWords} pictograms={PICTOGRAMS} />
+        <Input chars={Object.keys(seenChars)} pictograms={PICTOGRAMS} />
       </div>
     );
   }
