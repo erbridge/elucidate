@@ -5,7 +5,7 @@ class Message {
     magician: 1,
   };
 
-  constructor(type = this.types.default, words = []) {
+  constructor(type = Message.types.default, words = []) {
     this.type = type;
     this.words = words;
   }
@@ -17,7 +17,7 @@ class Message {
 
 const parameters = {
   messages: [
-    new Message(Message.types.fool, ['fool']),
+    new Message(Message.types.fool, ['a', 'fool', 'e']),
     new Message(Message.types.magician, ['sex', 'magic']),
   ],
 };

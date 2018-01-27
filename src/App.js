@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 
 import Message from './components/Message';
 
+import { generatePictograms } from './data/pictogram';
 import { getNextMessage } from './data/messages';
 
 import './App.css';
 
 const SEED = Math.floor(Math.random() * 100000);
+const PICTOGRAMS = generatePictograms(SEED);
 
 class App extends Component {
   state = {
@@ -67,7 +69,7 @@ class App extends Component {
             score++
           </button>
         </div>
-        <Message phrases={messageWords} seed={SEED} />
+        <Message phrases={messageWords} pictograms={PICTOGRAMS} />
       </div>
     );
   }

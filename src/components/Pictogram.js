@@ -2,14 +2,11 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import svg from 'svg.js';
 
-import { generatePictograms } from '../data/pictogram';
-
 import './Pictogram.css';
 
 class Pictogram extends Component {
   static propTypes = {
-    char: PropTypes.string.isRequired,
-    seed: PropTypes.number.isRequired,
+    drawFns: PropTypes.arrayOf(PropTypes.func).isRequired,
   };
 
   makeSvg(node) {
@@ -18,14 +15,11 @@ class Pictogram extends Component {
     }
   }
 
-  generatePictogram({ char, seed }) {
-    // FIXME: Pass this in instead of generating it every time.
-    const pictograms = generatePictograms(seed);
-
+  generatePictogram({ drawFns }) {
     this.pictogram.clear();
     this.pictogram.viewbox(0, 0, 500, 500);
 
-    pictograms[char].forEach(draw => draw(this.pictogram, 'white'));
+    drawFns.forEach(draw => draw(this.pictogram, 'white'));
   }
 
   componentDidMount() {
@@ -33,10 +27,7 @@ class Pictogram extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.char !== this.props.char ||
-      nextProps.seed !== this.props.seed
-    ) {
+    if (nextProps.drawFns !== this.props.drawFns) {
       this.generatePictogram(nextProps);
     }
   }

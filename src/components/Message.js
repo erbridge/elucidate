@@ -8,17 +8,17 @@ import './Message.css';
 class Message extends Component {
   static propTypes = {
     phrases: PropTypes.arrayOf(PropTypes.string).isRequired,
-    seed: PropTypes.number.isRequired,
+    pictograms: PropTypes.object.isRequired,
   };
 
   state = {
     phrases: [],
   };
 
-  generatePhrases({ phrases, seed }) {
+  generatePhrases({ phrases, pictograms }) {
     this.setState({
       phrases: phrases.map((phrase, i) => (
-        <Phrase key={i} phrase={phrase} seed={seed} />
+        <Phrase key={i} phrase={phrase} pictograms={pictograms} />
       )),
     });
   }
@@ -30,7 +30,7 @@ class Message extends Component {
   componentWillReceiveProps(nextProps) {
     if (
       nextProps.phrases !== this.props.phrases ||
-      nextProps.seed !== this.props.seed
+      nextProps.pictograms !== this.props.pictograms
     ) {
       this.generatePhrases(nextProps);
     }

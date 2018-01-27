@@ -8,18 +8,18 @@ import './Phrase.css';
 class Phrase extends Component {
   static propTypes = {
     phrase: PropTypes.string.isRequired,
-    seed: PropTypes.number.isRequired,
+    pictograms: PropTypes.object.isRequired,
   };
 
   state = {
     pictograms: [],
   };
 
-  generatePictograms({ phrase, seed }) {
+  generatePictograms({ phrase, pictograms }) {
     this.setState({
       pictograms: phrase
         .split('')
-        .map((char, i) => <Pictogram key={i} char={char} seed={seed} />),
+        .map((char, i) => <Pictogram key={i} drawFns={pictograms[char]} />),
     });
   }
 
@@ -30,7 +30,7 @@ class Phrase extends Component {
   componentWillReceiveProps(nextProps) {
     if (
       nextProps.phrase !== this.props.phrase ||
-      nextProps.seed !== this.props.seed
+      nextProps.pictograms !== this.props.pictograms
     ) {
       this.generatePictograms(nextProps);
     }
