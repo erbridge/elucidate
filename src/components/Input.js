@@ -11,6 +11,7 @@ import './Input.css';
 class Input extends Component {
   static propTypes = {
     chars: PropTypes.arrayOf(PropTypes.string).isRequired,
+    onSubmit: PropTypes.func.isRequired,
     pictograms: PropTypes.object.isRequired,
   };
 
@@ -20,22 +21,28 @@ class Input extends Component {
     wordTranslation: '',
   };
 
-  submitWord(word) {
+  submitWord() {
+    const { onSubmit } = this.props;
+    const { knownChars, wordInput } = this.state;
+    const wordString = wordInput.join('');
+
     const newState = { wordInput: [] };
 
-    const wordString = word.join('');
+    const isValid = isWordValid(wordString);
 
-    if (isWordValid(wordString)) {
+    if (isValid) {
       newState.knownChars = wordString
         .split('')
         .reduce((acc, char) => ({ ...acc, [char]: true }), {
-          ...this.state.knownChars,
+          ...knownChars,
         });
 
       newState.wordTranslation = wordString;
     }
 
     this.setState(newState);
+
+    onSubmit(isValid);
   }
 
   render() {
@@ -47,18 +54,16 @@ class Input extends Component {
         {wordTranslation && (
           <div className="Input__translation">{wordTranslation}</div>
         )}
-        <div className="Input__word" onClick={() => this.submitWord(wordInput)}>
+        <div className="Input__word" onClick={() => this.submitWord()}>
           {wordInput.map((char, i) => (
             <Pictogram key={i} drawFns={pictograms[char]} />
           ))}
         </div>
         <Keyboard
           chars={chars}
-          handleInput={char =>
-            this.setState({ wordInput: [...wordInput, char] })
-          }
           knownChars={Object.keys(knownChars)}
           pictograms={pictograms}
+          onInput={char => this.setState({ wordInput: [...wordInput, char] })}
         />
       </div>
     );

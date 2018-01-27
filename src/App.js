@@ -21,7 +21,7 @@ class App extends Component {
 
   updateMessage({ score }) {
     this.setState(({ seenChars }) => {
-      const messageWords = getNextMessage(score).getWords();
+      const messageWords = getNextMessage(Math.ceil(score)).getWords();
 
       return {
         messageWords,
@@ -38,6 +38,20 @@ class App extends Component {
         ).reduce((acc, char) => ({ ...acc, [char]: true }), { ...seenChars }),
       };
     });
+  }
+
+  handleSubmit(wasSuccess) {
+    const { score } = this.state;
+
+    let newScore = score;
+
+    if (wasSuccess) {
+      newScore++;
+    } else {
+      newScore -= 0.25;
+    }
+
+    this.setState({ score: newScore });
   }
 
   componentWillMount() {
@@ -77,7 +91,11 @@ class App extends Component {
         </div>
         <Message phrases={messageWords} pictograms={PICTOGRAMS} />
         <div className="App__spacer" />
-        <Input chars={Object.keys(seenChars)} pictograms={PICTOGRAMS} />
+        <Input
+          chars={Object.keys(seenChars)}
+          pictograms={PICTOGRAMS}
+          onSubmit={wasSuccess => this.handleSubmit(wasSuccess)}
+        />
       </div>
     );
   }

@@ -8,13 +8,13 @@ import './Keyboard.css';
 class Keyboard extends Component {
   static propTypes = {
     chars: PropTypes.arrayOf(PropTypes.string).isRequired,
-    handleInput: PropTypes.func.isRequired,
     knownChars: PropTypes.arrayOf(PropTypes.string).isRequired,
+    onInput: PropTypes.func.isRequired,
     pictograms: PropTypes.object.isRequired,
   };
 
   render() {
-    const { chars, handleInput, pictograms, knownChars } = this.props;
+    const { chars, knownChars, onInput, pictograms } = this.props;
 
     return (
       <div className="Keyboard">
@@ -22,7 +22,7 @@ class Keyboard extends Component {
           <div
             key={char}
             className="Keyboard__key"
-            onClick={() => handleInput(char)}
+            onClick={() => onInput(char)}
           >
             <Pictogram drawFns={pictograms[char]} />
             {knownChars.indexOf(char) !== -1 && (
