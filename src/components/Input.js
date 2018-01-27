@@ -11,7 +11,8 @@ import './Input.css';
 class Input extends Component {
   static propTypes = {
     chars: PropTypes.arrayOf(PropTypes.string).isRequired,
-    onSubmit: PropTypes.func.isRequired,
+    onSubmitFailure: PropTypes.func.isRequired,
+    onSubmitSuccess: PropTypes.func.isRequired,
     pictograms: PropTypes.object.isRequired,
   };
 
@@ -22,8 +23,9 @@ class Input extends Component {
   };
 
   submitWord() {
-    const { onSubmit } = this.props;
+    const { onSubmitFailure } = this.props;
     const { knownChars, wordInput } = this.state;
+
     const wordString = wordInput.join('');
 
     const newState = { wordInput: [] };
@@ -42,7 +44,21 @@ class Input extends Component {
 
     this.setState(newState);
 
-    onSubmit(isValid);
+    if (!isValid) {
+      const scoreDelta = -0.25;
+
+      onSubmitFailure(scoreDelta);
+    }
+  }
+
+  submitSuccess() {
+    const { onSubmitSuccess } = this.props;
+
+    this.setState({ wordTranslation: '' });
+
+    const scoreDelta = 1;
+
+    onSubmitSuccess(scoreDelta);
   }
 
   render() {
@@ -52,7 +68,12 @@ class Input extends Component {
     return (
       <div className="Input">
         {wordTranslation && (
-          <div className="Input__translation">{wordTranslation}</div>
+          <div
+            className="Input__translation"
+            onClick={() => this.submitSuccess()}
+          >
+            {wordTranslation}
+          </div>
         )}
         <div className="Input__word" onClick={() => this.submitWord()}>
           {wordInput.map((char, i) => (

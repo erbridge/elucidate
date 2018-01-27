@@ -40,18 +40,10 @@ class App extends Component {
     });
   }
 
-  handleSubmit(wasSuccess) {
+  handleInput(scoreDelta) {
     const { score } = this.state;
 
-    let newScore = score;
-
-    if (wasSuccess) {
-      newScore++;
-    } else {
-      newScore -= 0.25;
-    }
-
-    this.setState({ score: newScore });
+    this.setState({ score: score + scoreDelta });
   }
 
   componentWillMount() {
@@ -69,32 +61,13 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div>
-          <button
-            onClick={() =>
-              this.setState(({ score }) => ({
-                score: score - 1,
-              }))
-            }
-          >
-            score--
-          </button>
-          <button
-            onClick={() =>
-              this.setState(({ score }) => ({
-                score: score + 1,
-              }))
-            }
-          >
-            score++
-          </button>
-        </div>
         <Message phrases={messageWords} pictograms={PICTOGRAMS} />
         <div className="App__spacer" />
         <Input
           chars={Object.keys(seenChars)}
           pictograms={PICTOGRAMS}
-          onSubmit={wasSuccess => this.handleSubmit(wasSuccess)}
+          onSubmitFailure={scoreDelta => this.handleInput(scoreDelta)}
+          onSubmitSuccess={scoreDelta => this.handleInput(scoreDelta)}
         />
       </div>
     );
