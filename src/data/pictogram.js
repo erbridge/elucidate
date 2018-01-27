@@ -245,10 +245,10 @@ const parameters = {
         element
           .circle(70)
           .fill('none')
-          .stroke({ width: 2, color: colour })
+          .stroke({ width: 4, color: colour })
           .cx(250)
           .cy(250)
-          .opacity(0.3),
+          .opacity(0.5),
       ),
       new Segment((element, colour) =>
         element
