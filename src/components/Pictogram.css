@@ -1,5 +1,20 @@
 .Pictogram {
+  display: flex;
   max-width: 7rem;
   max-height: 7rem;
   margin: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.Pictogram__glyph {
+  width: 7rem;
+  height: 7rem;
+}
+
+.Pictogram__translation {
+  position: absolute;
+  font-size: 3rem;
+  color: #f88;
+  opacity: 0.5;
 }

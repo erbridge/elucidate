@@ -14,6 +14,7 @@ class Input extends Component {
     onSubmitFailure: PropTypes.func.isRequired,
     onSubmitSuccess: PropTypes.func.isRequired,
     pictograms: PropTypes.object.isRequired,
+    revealAllChars: PropTypes.bool,
   };
 
   state = {
@@ -62,7 +63,7 @@ class Input extends Component {
   }
 
   render() {
-    const { chars, pictograms } = this.props;
+    const { chars, pictograms, revealAllChars } = this.props;
     const { knownChars, wordInput, wordTranslation } = this.state;
 
     return (
@@ -84,6 +85,7 @@ class Input extends Component {
           chars={chars}
           knownChars={Object.keys(knownChars)}
           pictograms={pictograms}
+          revealAllChars={revealAllChars}
           onInput={char => this.setState({ wordInput: [...wordInput, char] })}
         />
       </div>

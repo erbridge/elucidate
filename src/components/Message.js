@@ -9,16 +9,22 @@ class Message extends Component {
   static propTypes = {
     phrases: PropTypes.arrayOf(PropTypes.string).isRequired,
     pictograms: PropTypes.object.isRequired,
+    revealAllChars: PropTypes.bool,
   };
 
   state = {
     phrases: [],
   };
 
-  generatePhrases({ phrases, pictograms }) {
+  generatePhrases({ phrases, pictograms, revealAllChars }) {
     this.setState({
       phrases: phrases.map((phrase, i) => (
-        <Phrase key={i} phrase={phrase} pictograms={pictograms} />
+        <Phrase
+          key={i}
+          phrase={phrase}
+          pictograms={pictograms}
+          revealAllChars={revealAllChars}
+        />
       )),
     });
   }
@@ -30,7 +36,8 @@ class Message extends Component {
   componentWillReceiveProps(nextProps) {
     if (
       nextProps.phrases !== this.props.phrases ||
-      nextProps.pictograms !== this.props.pictograms
+      nextProps.pictograms !== this.props.pictograms ||
+      nextProps.revealAllChars !== this.props.revealAllChars
     ) {
       this.generatePhrases(nextProps);
     }

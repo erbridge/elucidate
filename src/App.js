@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import shuffle from 'shuffle-array';
 
 import Input from './components/Input';
 import Message from './components/Message';
 
 import { generatePictograms } from './data/pictogram';
-import { getNextMessage } from './data/messages';
+import { MessageData, getNextMessage } from './data/messages';
 
 import './App.css';
 
@@ -17,11 +17,15 @@ class App extends Component {
     messageWords: '',
     score: 0,
     seenChars: {},
+    shouldAllowInput: true,
+    shouldRevealAllChars: false,
   };
 
   updateMessage({ score }) {
     this.setState(({ seenChars }) => {
-      const messageWords = getNextMessage(Math.ceil(score)).getWords();
+      const messageData = getNextMessage(Math.ceil(score));
+      const messageType = messageData.getType();
+      const messageWords = messageData.getWords();
 
       return {
         messageWords,
@@ -36,6 +40,10 @@ class App extends Component {
               .reduce((acc, chars) => ({ ...acc, ...chars }), {}),
           ),
         ).reduce((acc, char) => ({ ...acc, [char]: true }), { ...seenChars }),
+        shouldAllowInput:
+          messageType !== MessageData.types.success &&
+          messageType !== MessageData.types.failure,
+        shouldRevealAllChars: messageType === MessageData.types.success,
       };
     });
   }
@@ -57,18 +65,32 @@ class App extends Component {
   }
 
   render() {
-    const { messageWords, seenChars } = this.state;
+    const {
+      messageWords,
+      seenChars,
+      shouldAllowInput,
+      shouldRevealAllChars,
+    } = this.state;
 
     return (
       <div className="App">
-        <Message phrases={messageWords} pictograms={PICTOGRAMS} />
-        <div className="App__spacer" />
-        <Input
-          chars={Object.keys(seenChars)}
+        <Message
+          phrases={messageWords}
           pictograms={PICTOGRAMS}
-          onSubmitFailure={scoreDelta => this.handleInput(scoreDelta)}
-          onSubmitSuccess={scoreDelta => this.handleInput(scoreDelta)}
+          revealAllChars={shouldRevealAllChars}
         />
+        {shouldAllowInput && (
+          <Fragment>
+            <div className="App__spacer" />
+            <Input
+              chars={Object.keys(seenChars)}
+              pictograms={PICTOGRAMS}
+              revealAllChars={shouldRevealAllChars}
+              onSubmitFailure={scoreDelta => this.handleInput(scoreDelta)}
+              onSubmitSuccess={scoreDelta => this.handleInput(scoreDelta)}
+            />
+          </Fragment>
+        )}
       </div>
     );
   }

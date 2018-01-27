@@ -1,13 +1,19 @@
-class Message {
+export class MessageData {
   static types = {
-    default: -1,
+    default: -2,
+    failure: -1,
     fool: 0,
     magician: 1,
+    success: 2, // TODO: Make this the last one.
   };
 
-  constructor(type = Message.types.default, words = []) {
+  constructor(type = MessageData.types.default, words = []) {
     this.type = type;
     this.words = words;
+  }
+
+  getType() {
+    return this.type;
   }
 
   getWords() {
@@ -17,11 +23,18 @@ class Message {
 
 const parameters = {
   messages: [
-    new Message(Message.types.fool, ['a', 'fool', 'e']),
-    new Message(Message.types.magician, ['sex', 'magic']),
+    new MessageData(MessageData.types.failure),
+    new MessageData(MessageData.types.fool, ['fool']),
+    new MessageData(MessageData.types.magician, ['sex', 'magic']),
+    new MessageData(MessageData.types.success, [
+      'aid',
+      'exchange',
+      'destroy',
+      'take',
+    ]),
   ],
 };
 
 export const getNextMessage = score => {
-  return parameters.messages[score] || new Message();
+  return parameters.messages[score + 1] || new MessageData();
 };

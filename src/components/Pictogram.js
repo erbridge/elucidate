@@ -6,6 +6,7 @@ import './Pictogram.css';
 
 class Pictogram extends Component {
   static propTypes = {
+    char: PropTypes.string,
     drawFns: PropTypes.arrayOf(PropTypes.func).isRequired,
   };
 
@@ -33,13 +34,18 @@ class Pictogram extends Component {
   }
 
   render() {
+    const { char } = this.props;
+
     return (
-      <div
-        ref={node => {
-          this.makeSvg(node);
-        }}
-        className="Pictogram"
-      />
+      <div className="Pictogram">
+        <div
+          ref={node => {
+            this.makeSvg(node);
+          }}
+          className="Pictogram__glyph"
+        />
+        {char && <div className="Pictogram__translation">{char}</div>}
+      </div>
     );
   }
 }

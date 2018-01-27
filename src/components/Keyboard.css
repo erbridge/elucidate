@@ -3,18 +3,3 @@
   flex-wrap: wrap;
   justify-content: center;
 }
-
-.Keyboard__key {
-  display: flex;
-  width: 7rem;
-  height: 7rem;
-  justify-content: center;
-  align-items: center;
-}
-
-.Keyboard__translation {
-  position: absolute;
-  font-size: 3rem;
-  color: #f88;
-  opacity: 0.5;
-}
