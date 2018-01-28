@@ -1,5 +1,7 @@
+import allWords from 'an-array-of-english-words';
+
 const parameters = {
-  input: { validWords: ['fall', 'fell', 'fool'] },
+  input: { validWords: allWords.filter(word => word.length > 3) },
 };
 
 export const isWordValid = word => {
