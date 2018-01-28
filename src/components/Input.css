@@ -4,6 +4,7 @@
 }
 
 .Input__translation {
+  margin: 3rem 0;
   text-align: center;
   font-size: 3rem;
   color: white;
@@ -11,5 +12,6 @@
 
 .Input__word {
   display: flex;
+  margin: 3rem 0;
   justify-content: center;
 }
