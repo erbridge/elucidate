@@ -95,7 +95,7 @@ export class MessageData {
 
 const parameters = {
   messages: [
-    new MessageData(MessageData.types.failure),
+    new MessageData(MessageData.types.failure, ['try', 'again']),
     new MessageData(MessageData.types.fool, ['fool']),
     new MessageData(MessageData.types.magician, ['answer']),
     new MessageData(MessageData.types.priestess, ['change']),

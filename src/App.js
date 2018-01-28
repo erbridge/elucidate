@@ -54,7 +54,9 @@ class App extends Component {
       shouldAllowInput:
         messageType !== MessageData.types.success &&
         messageType !== MessageData.types.failure,
-      shouldRevealAllChars: messageType === MessageData.types.success,
+      shouldRevealAllChars:
+        messageType === MessageData.types.success ||
+        messageType === MessageData.types.failure,
       shouldShowImage: shouldShowNextImage,
       shouldShowNextImage: false,
     });
