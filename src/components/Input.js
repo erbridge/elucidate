@@ -17,6 +17,7 @@ class Input extends Component {
     onSubmitSuccess: PropTypes.func.isRequired,
     pictograms: PropTypes.object.isRequired,
     revealAllChars: PropTypes.bool,
+    usedWords: PropTypes.arrayOf(PropTypes.string).isRequired,
   };
 
   state = {
@@ -25,14 +26,15 @@ class Input extends Component {
   };
 
   submitWord() {
-    const { onNewWord, onSubmitFailure } = this.props;
+    const { onNewWord, onSubmitFailure, usedWords } = this.props;
     const { wordInput } = this.state;
 
     const wordString = wordInput.join('');
 
     const newState = { wordInput: [] };
 
-    const isValid = isWordValid(wordString);
+    const isValid =
+      usedWords.indexOf(wordString) === -1 && isWordValid(wordString);
 
     if (isValid) {
       newState.wordTranslation = wordString;

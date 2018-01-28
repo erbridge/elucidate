@@ -29,6 +29,7 @@ class App extends Component {
     shouldShowImage: false,
     shouldShowNextImage: true,
     shouldShowTitleScreen: true,
+    usedWords: {},
   };
 
   updateMessage({ score, seenChars, shouldShowNextImage }) {
@@ -63,16 +64,17 @@ class App extends Component {
   }
 
   handleNewWord(newChars) {
-    const { knownChars } = this.state;
+    const { knownChars, usedWords } = this.state;
 
     this.setState({
       knownChars: newChars.reduce((acc, char) => ({ ...acc, [char]: true }), {
         ...knownChars,
       }),
+      usedWords: { ...usedWords, [newChars.join('')]: true },
     });
   }
 
-  handleInput(scoreDelta, newChars = []) {
+  handleInput(scoreDelta) {
     const { score } = this.state;
 
     const newScore = score + scoreDelta;
@@ -104,6 +106,7 @@ class App extends Component {
       shouldRevealAllChars,
       shouldShowImage,
       shouldShowTitleScreen,
+      usedWords,
     } = this.state;
 
     return (
@@ -155,6 +158,7 @@ class App extends Component {
                       onSubmitSuccess={scoreDelta =>
                         this.handleInput(scoreDelta)
                       }
+                      usedWords={Object.keys(usedWords)}
                     />
                   </Fragment>
                 )}
