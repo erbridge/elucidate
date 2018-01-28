@@ -32,7 +32,7 @@ class App extends Component {
     usedWords: {},
   };
 
-  updateMessage({ score, seenChars, shouldShowNextImage }) {
+  updateMessage({ score, seenChars, shouldShowNextImage, usedWords }) {
     const messageData = getNextMessage(Math.ceil(score));
     const messageType = messageData.getType();
     const messageWords = messageData.getWords();
@@ -60,6 +60,16 @@ class App extends Component {
         messageType === MessageData.types.failure,
       shouldShowImage: shouldShowNextImage,
       shouldShowNextImage: false,
+      usedWords:
+        messageType === MessageData.types.fool
+          ? usedWords
+          : {
+              ...usedWords,
+              ...messageWords.reduce(
+                (acc, word) => ({ ...acc, [word]: true }),
+                {},
+              ),
+            },
     });
   }
 
