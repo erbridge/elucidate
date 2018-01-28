@@ -4,6 +4,7 @@ import shuffle from 'shuffle-array';
 
 import Input from './components/Input';
 import Message from './components/Message';
+import TitleScreen from './components/TitleScreen';
 
 import { generatePictograms } from './data/pictogram';
 import { MessageData, getNextMessage } from './data/messages';
@@ -27,6 +28,7 @@ class App extends Component {
     shouldRevealAllChars: false,
     shouldShowImage: false,
     shouldShowNextImage: true,
+    shouldShowTitleScreen: true,
   };
 
   updateMessage({ score, seenChars, shouldShowNextImage }) {
@@ -99,45 +101,61 @@ class App extends Component {
       shouldPlayAudio,
       shouldRevealAllChars,
       shouldShowImage,
+      shouldShowTitleScreen,
     } = this.state;
 
     return (
       <div
         className="App"
         onClick={() =>
-          shouldShowImage && this.setState({ shouldShowImage: false })
+          shouldShowTitleScreen
+            ? this.setState({
+                shouldShowTitleScreen: false,
+              })
+            : this.setState({
+                shouldShowImage: false,
+              })
         }
       >
-        {shouldShowImage &&
-          messageImage && (
-            <img className="App__background" src={messageImage} alt="" />
-          )}
-        <Sound
-          url={ambienceSound}
-          playStatus={Sound.status.PLAYING}
-          volume={shouldPlayAudio ? 100 : 0}
-          loop
-        />
-        {!(shouldShowImage && messageImage) && (
+        {shouldShowTitleScreen && <TitleScreen />}
+        {!shouldShowTitleScreen && (
           <Fragment>
-            <Message
-              knownChars={Object.keys(knownChars)}
-              phrases={messageWords}
-              pictograms={PICTOGRAMS}
-              revealAllChars={shouldRevealAllChars}
+            {shouldShowImage &&
+              messageImage && (
+                <img className="App__background" src={messageImage} alt="" />
+              )}
+            <Sound
+              url={ambienceSound}
+              playStatus={Sound.status.PLAYING}
+              volume={shouldPlayAudio ? 100 : 0}
+              loop
             />
-            {shouldAllowInput && (
+            {!(shouldShowImage && messageImage) && (
               <Fragment>
-                <div className="App__spacer" />
-                <Input
-                  chars={Object.keys(seenChars)}
+                <Message
                   knownChars={Object.keys(knownChars)}
+                  phrases={messageWords}
                   pictograms={PICTOGRAMS}
                   revealAllChars={shouldRevealAllChars}
-                  onNewWord={newChars => this.handleNewWord(newChars)}
-                  onSubmitFailure={scoreDelta => this.handleInput(scoreDelta)}
-                  onSubmitSuccess={scoreDelta => this.handleInput(scoreDelta)}
                 />
+                {shouldAllowInput && (
+                  <Fragment>
+                    <div className="App__spacer" />
+                    <Input
+                      chars={Object.keys(seenChars)}
+                      knownChars={Object.keys(knownChars)}
+                      pictograms={PICTOGRAMS}
+                      revealAllChars={shouldRevealAllChars}
+                      onNewWord={newChars => this.handleNewWord(newChars)}
+                      onSubmitFailure={scoreDelta =>
+                        this.handleInput(scoreDelta)
+                      }
+                      onSubmitSuccess={scoreDelta =>
+                        this.handleInput(scoreDelta)
+                      }
+                    />
+                  </Fragment>
+                )}
               </Fragment>
             )}
           </Fragment>
