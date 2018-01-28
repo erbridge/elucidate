@@ -127,6 +127,7 @@ class App extends Component {
         {!(shouldShowImage && messageImage) && (
           <Fragment>
             <Message
+              knownChars={Object.keys(knownChars)}
               phrases={messageWords}
               pictograms={PICTOGRAMS}
               revealAllChars={shouldRevealAllChars}

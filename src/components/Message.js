@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import equals from 'shallow-equals';
 
 import Phrase from './Phrase';
 
@@ -7,6 +8,7 @@ import './Message.css';
 
 class Message extends Component {
   static propTypes = {
+    knownChars: PropTypes.arrayOf(PropTypes.string).isRequired,
     phrases: PropTypes.arrayOf(PropTypes.string).isRequired,
     pictograms: PropTypes.object.isRequired,
     revealAllChars: PropTypes.bool,
@@ -16,11 +18,12 @@ class Message extends Component {
     phrases: [],
   };
 
-  generatePhrases({ phrases, pictograms, revealAllChars }) {
+  generatePhrases({ knownChars, phrases, pictograms, revealAllChars }) {
     this.setState({
       phrases: phrases.map((phrase, i) => (
         <Phrase
           key={i}
+          knownChars={knownChars}
           phrase={phrase}
           pictograms={pictograms}
           revealAllChars={revealAllChars}
@@ -35,8 +38,9 @@ class Message extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      nextProps.phrases !== this.props.phrases ||
-      nextProps.pictograms !== this.props.pictograms ||
+      !equals(nextProps.knownChars, this.props.knownChars) ||
+      !equals(nextProps.phrases, this.props.phrases) ||
+      !equals(nextProps.pictograms, this.props.pictograms) ||
       nextProps.revealAllChars !== this.props.revealAllChars
     ) {
       this.generatePhrases(nextProps);

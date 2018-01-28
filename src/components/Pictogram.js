@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import equals from 'shallow-equals';
 import svg from 'svg.js';
 
 import './Pictogram.css';
@@ -28,7 +29,7 @@ class Pictogram extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.drawFns !== this.props.drawFns) {
+    if (!equals(nextProps.drawFns, this.props.drawFns)) {
       this.generatePictogram(nextProps);
     }
   }

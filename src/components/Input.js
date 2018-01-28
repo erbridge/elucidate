@@ -75,7 +75,13 @@ class Input extends Component {
         )}
         <div className="Input__word" onClick={() => this.submitWord()}>
           {wordInput.map((char, i) => (
-            <Pictogram key={i} drawFns={pictograms[char]} />
+            <Pictogram
+              key={i}
+              char={
+                revealAllChars || knownChars.indexOf(char) !== -1 ? char : null
+              }
+              drawFns={pictograms[char]}
+            />
           ))}
         </div>
         <Keyboard
