@@ -323,7 +323,7 @@ const selectDrawFns = (char, rng, usedDrawFns, attemptCount = 0) => {
     }
   });
 
-  if (!drawFns.length || usedDrawFns.find(fns => equals(fns, drawFns))) {
+  if (drawFns.length < 2 || usedDrawFns.find(fns => equals(fns, drawFns))) {
     if (attemptCount > MAX_ATTEMPTS) {
       throw new Error(`Unable to generate a pictogram for '${char}'`);
     }
