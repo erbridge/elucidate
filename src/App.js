@@ -17,6 +17,7 @@ const PICTOGRAMS = generatePictograms(SEED);
 
 class App extends Component {
   state = {
+    messageImage: null,
     messageWords: '',
     score: 0,
     seenChars: {},
@@ -30,8 +31,10 @@ class App extends Component {
       const messageData = getNextMessage(Math.ceil(score));
       const messageType = messageData.getType();
       const messageWords = messageData.getWords();
+      const messageImage = messageData.getImage();
 
       return {
+        messageImage,
         messageWords,
         seenChars: shuffle(
           Object.keys(
@@ -70,6 +73,7 @@ class App extends Component {
 
   render() {
     const {
+      messageImage,
       messageWords,
       seenChars,
       shouldAllowInput,
@@ -79,35 +83,38 @@ class App extends Component {
 
     return (
       <div className="App">
-        <button
-          onClick={() => this.setState({ shouldPlayAudio: !shouldPlayAudio })}
-          style={{ position: 'fixed' }}
-        >
-          {shouldPlayAudio ? 'mute' : 'unmute'}
-        </button>
-        <Sound
-          url={ambienceSound}
-          playStatus={Sound.status.PLAYING}
-          volume={shouldPlayAudio ? 100 : 0}
-          loop
-        />
-        <Message
-          phrases={messageWords}
-          pictograms={PICTOGRAMS}
-          revealAllChars={shouldRevealAllChars}
-        />
-        {shouldAllowInput && (
-          <Fragment>
-            <div className="App__spacer" />
-            <Input
-              chars={Object.keys(seenChars)}
-              pictograms={PICTOGRAMS}
-              revealAllChars={shouldRevealAllChars}
-              onSubmitFailure={scoreDelta => this.handleInput(scoreDelta)}
-              onSubmitSuccess={scoreDelta => this.handleInput(scoreDelta)}
-            />
-          </Fragment>
-        )}
+        <div className="App__content">
+          <img className="App__background" src={messageImage} alt="" />
+          <button
+            onClick={() => this.setState({ shouldPlayAudio: !shouldPlayAudio })}
+            style={{ position: 'fixed' }}
+          >
+            {shouldPlayAudio ? 'mute' : 'unmute'}
+          </button>
+          <Sound
+            url={ambienceSound}
+            playStatus={Sound.status.PLAYING}
+            volume={shouldPlayAudio ? 100 : 0}
+            loop
+          />
+          <Message
+            phrases={messageWords}
+            pictograms={PICTOGRAMS}
+            revealAllChars={shouldRevealAllChars}
+          />
+          {shouldAllowInput && (
+            <Fragment>
+              <div className="App__spacer" />
+              <Input
+                chars={Object.keys(seenChars)}
+                pictograms={PICTOGRAMS}
+                revealAllChars={shouldRevealAllChars}
+                onSubmitFailure={scoreDelta => this.handleInput(scoreDelta)}
+                onSubmitSuccess={scoreDelta => this.handleInput(scoreDelta)}
+              />
+            </Fragment>
+          )}
+        </div>
       </div>
     );
   }
