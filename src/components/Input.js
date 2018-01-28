@@ -87,6 +87,7 @@ class Input extends Component {
           ))}
         </div>
         <Keyboard
+          allowInput={!wordTranslation}
           chars={chars}
           knownChars={knownChars}
           pictograms={pictograms}

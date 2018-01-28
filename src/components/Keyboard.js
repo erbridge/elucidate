@@ -7,6 +7,7 @@ import './Keyboard.css';
 
 class Keyboard extends Component {
   static propTypes = {
+    allowInput: PropTypes.bool,
     chars: PropTypes.arrayOf(PropTypes.string).isRequired,
     knownChars: PropTypes.arrayOf(PropTypes.string).isRequired,
     onInput: PropTypes.func.isRequired,
@@ -16,6 +17,7 @@ class Keyboard extends Component {
 
   render() {
     const {
+      allowInput,
       chars,
       knownChars,
       onInput,
@@ -29,7 +31,7 @@ class Keyboard extends Component {
           <div
             key={char}
             className="Keyboard__key"
-            onClick={() => onInput(char)}
+            onClick={() => allowInput && onInput(char)}
           >
             <Pictogram
               char={
