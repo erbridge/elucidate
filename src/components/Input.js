@@ -11,6 +11,8 @@ import './Input.css';
 class Input extends Component {
   static propTypes = {
     chars: PropTypes.arrayOf(PropTypes.string).isRequired,
+    knownChars: PropTypes.arrayOf(PropTypes.string).isRequired,
+    onNewWord: PropTypes.func.isRequired,
     onSubmitFailure: PropTypes.func.isRequired,
     onSubmitSuccess: PropTypes.func.isRequired,
     pictograms: PropTypes.object.isRequired,
@@ -18,14 +20,13 @@ class Input extends Component {
   };
 
   state = {
-    knownChars: [],
     wordInput: [],
     wordTranslation: '',
   };
 
   submitWord() {
-    const { onSubmitFailure } = this.props;
-    const { knownChars, wordInput } = this.state;
+    const { onNewWord, onSubmitFailure } = this.props;
+    const { wordInput } = this.state;
 
     const wordString = wordInput.join('');
 
@@ -34,18 +35,14 @@ class Input extends Component {
     const isValid = isWordValid(wordString);
 
     if (isValid) {
-      newState.knownChars = wordString
-        .split('')
-        .reduce((acc, char) => ({ ...acc, [char]: true }), {
-          ...knownChars,
-        });
-
       newState.wordTranslation = wordString;
     }
 
     this.setState(newState);
 
-    if (!isValid) {
+    if (isValid) {
+      onNewWord(wordInput);
+    } else {
       const scoreDelta = -0.25;
 
       onSubmitFailure(scoreDelta);
@@ -63,8 +60,8 @@ class Input extends Component {
   }
 
   render() {
-    const { chars, pictograms, revealAllChars } = this.props;
-    const { knownChars, wordInput, wordTranslation } = this.state;
+    const { chars, knownChars, pictograms, revealAllChars } = this.props;
+    const { wordInput, wordTranslation } = this.state;
 
     return (
       <div className="Input">
@@ -83,7 +80,7 @@ class Input extends Component {
         </div>
         <Keyboard
           chars={chars}
-          knownChars={Object.keys(knownChars)}
+          knownChars={knownChars}
           pictograms={pictograms}
           revealAllChars={revealAllChars}
           onInput={char => this.setState({ wordInput: [...wordInput, char] })}
