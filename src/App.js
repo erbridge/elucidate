@@ -112,12 +112,6 @@ class App extends Component {
           messageImage && (
             <img className="App__background" src={messageImage} alt="" />
           )}
-        <button
-          onClick={() => this.setState({ shouldPlayAudio: !shouldPlayAudio })}
-          style={{ position: 'fixed' }}
-        >
-          {shouldPlayAudio ? 'mute' : 'unmute'}
-        </button>
         <Sound
           url={ambienceSound}
           playStatus={Sound.status.PLAYING}
